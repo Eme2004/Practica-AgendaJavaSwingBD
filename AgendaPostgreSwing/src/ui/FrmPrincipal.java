@@ -7,35 +7,41 @@ import javax.swing.*;
 import java.awt.*;
 /**
  *
- * @author USER
+ * @author Emesis
  */
+// Clase que representa la ventana principal de la agenda
 public class FrmPrincipal extends JFrame {
-  
-    public FrmPrincipal() {
-        setTitle("Agenda de Contactos");
-        setSize(400, 200);
-        setLocationRelativeTo(null);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setLayout(new FlowLayout());
 
+    // Constructor: configura la ventana
+    public FrmPrincipal() {
+        setTitle("Agenda de Contactos");        // Título de la ventana
+        setSize(400, 200);                      // Tamaño de la ventana
+        setLocationRelativeTo(null);           // Centra la ventana en pantalla
+        setDefaultCloseOperation(EXIT_ON_CLOSE); // Finaliza la aplicación al cerrar
+        setLayout(new FlowLayout());           // Usa un layout simple (flujo horizontal)
+
+        //  Botón para ver contactos existentes
         JButton btnVerContactos = new JButton("📄 Ver Contactos");
+
+        //  Botón para abrir formulario y agregar nuevo contacto
         JButton btnAgregar = new JButton("➕ Agregar Contacto");
 
+        // Se agregan los botones a la ventana
         add(btnVerContactos);
         add(btnAgregar);
 
-        // Abrir ventana de listado
+        // Acción al hacer clic en "Ver Contactos": abre la ventana de lista
         btnVerContactos.addActionListener(e -> new VistaContactos());
 
-        // Abrir ventana de agregar
+        // Acción al hacer clic en "Agregar Contacto": abre el formulario de ingreso
         btnAgregar.addActionListener(e -> new FrmAgregarContacto());
 
+        // Hace visible la ventana principal
         setVisible(true);
     }
 
+    // Punto de entrada de la aplicación: lanza la interfaz principal
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> new FrmPrincipal());
     }
-
-
 }
