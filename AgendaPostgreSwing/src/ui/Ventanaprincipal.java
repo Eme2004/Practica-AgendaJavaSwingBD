@@ -3,22 +3,26 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package ui;
-import ui.PanelListaContactos;
+import dao.ConexionBD;
 import javax.swing.JOptionPane;
+import java.sql.Connection;
 
 /**
  *
  * @author Emesis
  */
 public class Ventanaprincipal extends javax.swing.JFrame {
-    private PanelListaContactos ventanaLista;
+  private TablaContactos tablaContactos;  // Mantener la instancia
+    
     /**
      * Creates new form Ventanaprincipal
      */
     public Ventanaprincipal() {
         initComponents();
-        setLocationRelativeTo(null);
+      setLocationRelativeTo(null);
+       tablaContactos = new TablaContactos();
     }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -34,8 +38,8 @@ public class Ventanaprincipal extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         btnContactos = new javax.swing.JButton();
         btnAgregar = new javax.swing.JButton();
-        btnEditar = new javax.swing.JButton();
-        btnEliminar = new javax.swing.JButton();
+        btnSalir = new javax.swing.JButton();
+        btnEvento = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -43,7 +47,7 @@ public class Ventanaprincipal extends javax.swing.JFrame {
 
         lblAgendaContactos.setFont(new java.awt.Font("Segoe UI", 3, 36)); // NOI18N
         lblAgendaContactos.setForeground(new java.awt.Color(255, 255, 255));
-        lblAgendaContactos.setText("Agenda de Contactos");
+        lblAgendaContactos.setText("Agenda de Contactos y Eventos");
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(new javax.swing.border.MatteBorder(null));
@@ -62,17 +66,17 @@ public class Ventanaprincipal extends javax.swing.JFrame {
             }
         });
 
-        btnEditar.setText("Editar");
-        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+        btnSalir.setText("Salir");
+        btnSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEditarActionPerformed(evt);
+                btnSalirActionPerformed(evt);
             }
         });
 
-        btnEliminar.setText("Eliminar");
-        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+        btnEvento.setText("Evento");
+        btnEvento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEliminarActionPerformed(evt);
+                btnEventoActionPerformed(evt);
             }
         });
 
@@ -81,26 +85,29 @@ public class Ventanaprincipal extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(24, 24, 24)
+                .addGap(27, 27, 27)
                 .addComponent(btnAgregar)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
                 .addComponent(btnContactos)
-                .addGap(18, 18, 18)
-                .addComponent(btnEditar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
-                .addComponent(btnEliminar)
-                .addGap(15, 15, 15))
+                .addGap(59, 59, 59)
+                .addComponent(btnSalir)
+                .addGap(40, 40, 40))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnEvento)
+                .addGap(204, 204, 204))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(40, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(55, 55, 55)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAgregar)
-                    .addComponent(btnEditar)
                     .addComponent(btnContactos)
-                    .addComponent(btnEliminar))
-                .addGap(37, 37, 37))
+                    .addComponent(btnSalir))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
+                .addComponent(btnEvento)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -108,23 +115,23 @@ public class Ventanaprincipal extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap(55, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(89, 89, 89)
-                        .addComponent(lblAgendaContactos))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(21, 21, 21)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(21, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(lblAgendaContactos)
+                        .addGap(40, 40, 40))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(57, 57, 57))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(64, 64, 64)
+                .addGap(60, 60, 60)
                 .addComponent(lblAgendaContactos)
-                .addGap(63, 63, 63)
+                .addGap(60, 60, 60)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(142, Short.MAX_VALUE))
+                .addContainerGap(107, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -144,26 +151,30 @@ public class Ventanaprincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnContactosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnContactosActionPerformed
-        // TODO add your handling code here:
-       PanelListaContactos panel = new PanelListaContactos();
-       panel.setVisible(true);
+     tablaContactos.setVisible(true);
     }//GEN-LAST:event_btnContactosActionPerformed
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         // TODO add your handling code here:
-        Formulario formu = new Formulario();
-        formu.setVisible(true);
+       Formulario formulario = new Formulario();
+       formulario.setVisible(true);
     }//GEN-LAST:event_btnAgregarActionPerformed
 
-    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         // TODO add your handling code here:
-       
-    }//GEN-LAST:event_btnEditarActionPerformed
+        System.exit(0); 
+    }//GEN-LAST:event_btnSalirActionPerformed
 
-    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+    private void btnEventoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEventoActionPerformed
         // TODO add your handling code here:
-        JOptionPane.showMessageDialog(this, "Función de eliminación pendiente.");
-    }//GEN-LAST:event_btnEliminarActionPerformed
+          Connection conexion = ConexionBD.getConexion();
+    if (conexion != null) {
+        VentanaEventos ventanaEventos = new VentanaEventos(conexion);
+        ventanaEventos.setVisible(true);
+    } else {
+        JOptionPane.showMessageDialog(this, "No se pudo establecer la conexión con la base de datos.");
+    }
+    }//GEN-LAST:event_btnEventoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -203,8 +214,8 @@ public class Ventanaprincipal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnContactos;
-    private javax.swing.JButton btnEditar;
-    private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnEvento;
+    private javax.swing.JButton btnSalir;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel lblAgendaContactos;

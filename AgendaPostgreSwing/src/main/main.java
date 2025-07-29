@@ -4,7 +4,6 @@
  */
 package main;
 import javax.swing.SwingUtilities;
-import ui.FrmPrincipal;
 import ui.MiAgenda;
 
 /**

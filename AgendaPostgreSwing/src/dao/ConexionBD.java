@@ -13,26 +13,15 @@ import java.sql.SQLException;
  */
 // Clase encargada de establecer la conexión con la base de datos PostgreSQL
 public class ConexionBD {
-
-    // Método estático que intenta establecer y devolver una conexión a la base de datos
-    public static Connection conectar() {
-        Connection conn = null; // Variable para almacenar la conexión
-
+ public static Connection getConexion() {
         try {
-            // Datos de conexión a la base de datos
-            String url = "jdbc:postgresql://localhost:5432/miAgenda"; // URL del servidor PostgreSQL con base de datos "miAgenda"
-            String usuario = "postgres";       // Usuario de la base de datos
-            String contraseña = "eme12";       // Contraseña del usuario
-
-            // Se intenta establecer la conexión usando DriverManager
-            conn = DriverManager.getConnection(url, usuario, contraseña);
-
+            String url = "jdbc:postgresql://localhost:5432/miAgenda";
+            String usuario = "postgres";
+            String contraseña = "eme12";
+            return DriverManager.getConnection(url, usuario, contraseña);
         } catch (SQLException e) {
-            // Si ocurre un error al conectar, se imprime el mensaje
             System.out.println("⚠ Error al conectar: " + e.getMessage());
+            return null;
         }
-
-        // Se devuelve la conexión (puede ser null si falló)
-        return conn;
     }
 }

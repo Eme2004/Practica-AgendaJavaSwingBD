@@ -19,7 +19,7 @@ public class ContactoDAO {
     private PreparedStatement ps;
     private ResultSet rs;
 
-    // 🔌 Método para conectar a la base de datos
+    //  Método para conectar a la base de datos
     public Connection conectar() {
         try {
             // Carga explícita del driver de PostgreSQL (opcional en JDBC 4+)
@@ -38,7 +38,7 @@ public class ContactoDAO {
         return conn; // Devuelve la conexión (puede ser null si falló)
     }
 
-    // ❌ Método para cerrar todos los recursos abiertos (resultset, statement, conexión)
+    //  Método para cerrar todos los recursos abiertos (resultset, statement, conexión)
     public void cerrarConexion() {
         try {
             if (rs != null) rs.close();      // Cierra el resultado
@@ -49,7 +49,7 @@ public class ContactoDAO {
         }
     }
 
-    // 📥 Método para insertar un nuevo contacto en la base de datos
+    //  Método para insertar un nuevo contacto en la base de datos
     public boolean insertar(Contacto c) {
         // SQL con placeholders para evitar inyección SQL
         String sql = "INSERT INTO contacto(nombre, telefono, email, direccion) VALUES (?, ?, ?, ?)";
@@ -80,7 +80,7 @@ public class ContactoDAO {
         }
     }
 
-    // 📋 Método para obtener todos los contactos en forma de lista
+    //  Método para obtener todos los contactos en forma de lista
     public List<Contacto> listar() {
         List<Contacto> lista = new ArrayList<>();
         String sql = "SELECT * FROM contacto";

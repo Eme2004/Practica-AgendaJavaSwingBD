@@ -3,8 +3,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package ui;
-import ui.PanelListaContactos;
-import javax.swing.JFormattedTextField;
+
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import ui.TablaContactos;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -12,12 +14,9 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author USER
  */
-public class Formulario extends javax.swing.JFrame {
-private JFormattedTextField txtNombre;
-private JFormattedTextField txtApellidos;
-private JFormattedTextField txtTelefono;
-private JFormattedTextField txtEmail;
-private JFormattedTextField txtDireccion;
+public class Formulario extends JFrame {
+private DefaultTableModel modeloTabla;
+private int filaEditar = -1;
 
 public void setDatos(String nombre, String apellidos, String telefono, String email, String direccion) {
     txtNombre.setText(nombre);
@@ -26,13 +25,31 @@ public void setDatos(String nombre, String apellidos, String telefono, String em
     txtEmail.setText(email);
     txtDireccion.setText(direccion);
 }
+    
+
     /**
      * Creates new form Formulario
      */
-    public Formulario() {
-        initComponents();
-    }
+      
+    
+   public Formulario() {
+    initComponents();
+    setLocationRelativeTo(null); // Centra la ventana (opcional)
+    
+   }
+   public Formulario(DefaultTableModel modelo, int filaEditar, String nombre, String apellidos, String telefono, String email, String direccion) {
+    this.modeloTabla = modelo;
+    this.filaEditar = filaEditar;
+    initComponents();
+    
 
+    // Llenar los campos con los datos
+    txtNombre.setText(nombre);
+    txtApellidos.setText(apellidos);
+    txtTelefono.setText(telefono);
+    txtEmail.setText(email);
+    txtDireccion.setText(direccion);
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -43,39 +60,39 @@ public void setDatos(String nombre, String apellidos, String telefono, String em
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
+        lblNombre = new javax.swing.JLabel();
+        lblApellidos = new javax.swing.JLabel();
+        lblTelefono = new javax.swing.JLabel();
+        lblEmail = new javax.swing.JLabel();
+        lblDireccion = new javax.swing.JLabel();
         btnGuardar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         btnValidarDatos = new javax.swing.JButton();
         btnVolver = new javax.swing.JButton();
-        txtnombre = new javax.swing.JTextField();
-        txtapellidos = new javax.swing.JTextField();
-        txttelefono = new javax.swing.JTextField();
-        txtdireccion = new javax.swing.JTextField();
-        txtemail = new javax.swing.JTextField();
+        txtNombre = new javax.swing.JTextField();
+        txtApellidos = new javax.swing.JTextField();
+        txtTelefono = new javax.swing.JTextField();
+        txtDireccion = new javax.swing.JTextField();
+        txtEmail = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(204, 153, 255));
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 3, 14)); // NOI18N
-        jLabel1.setText("Nombre");
+        lblNombre.setFont(new java.awt.Font("Segoe UI", 3, 14)); // NOI18N
+        lblNombre.setText("Nombre");
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 3, 14)); // NOI18N
-        jLabel2.setText("Apellidos");
+        lblApellidos.setFont(new java.awt.Font("Segoe UI", 3, 14)); // NOI18N
+        lblApellidos.setText("Apellidos");
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 3, 14)); // NOI18N
-        jLabel3.setText("Telefono");
+        lblTelefono.setFont(new java.awt.Font("Segoe UI", 3, 14)); // NOI18N
+        lblTelefono.setText("Telefono");
 
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 3, 14)); // NOI18N
-        jLabel4.setText("Email");
+        lblEmail.setFont(new java.awt.Font("Segoe UI", 3, 14)); // NOI18N
+        lblEmail.setText("Email");
 
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 3, 14)); // NOI18N
-        jLabel5.setText("Direccion");
+        lblDireccion.setFont(new java.awt.Font("Segoe UI", 3, 14)); // NOI18N
+        lblDireccion.setText("Direccion");
 
         btnGuardar.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
         btnGuardar.setText("Guardar");
@@ -109,9 +126,9 @@ public void setDatos(String nombre, String apellidos, String telefono, String em
             }
         });
 
-        txttelefono.addActionListener(new java.awt.event.ActionListener() {
+        txtTelefono.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txttelefonoActionPerformed(evt);
+                txtTelefonoActionPerformed(evt);
             }
         });
 
@@ -124,20 +141,20 @@ public void setDatos(String nombre, String apellidos, String telefono, String em
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(35, 35, 35)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel5)))
+                            .addComponent(lblNombre)
+                            .addComponent(lblTelefono)
+                            .addComponent(lblApellidos)
+                            .addComponent(lblDireccion)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(43, 43, 43)
-                        .addComponent(jLabel4)))
+                        .addComponent(lblEmail)))
                 .addGap(211, 211, 211)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtemail)
-                    .addComponent(txtapellidos, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(txtnombre, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(txttelefono)
-                    .addComponent(txtdireccion, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addComponent(txtEmail)
+                    .addComponent(txtApellidos, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(txtNombre, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(txtTelefono)
+                    .addComponent(txtDireccion, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addGap(107, 107, 107))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -157,24 +174,24 @@ public void setDatos(String nombre, String apellidos, String telefono, String em
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(65, 65, 65)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(txtnombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblNombre)
+                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(35, 35, 35)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(txtapellidos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblApellidos)
+                    .addComponent(txtApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(34, 34, 34)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(txttelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblTelefono)
+                    .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(40, 40, 40)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(txtemail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblEmail)
+                    .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(37, 37, 37)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtdireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5))
+                    .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblDireccion))
                 .addGap(76, 76, 76)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCancelar)
@@ -200,9 +217,7 @@ public void setDatos(String nombre, String apellidos, String telefono, String em
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        // TODO add your handling code here:
-         // Obtener los datos del formulario
-    String nombre = txtnombre.getText();
+  String nombre = txtNombre.getText();
     String apellidos = txtApellidos.getText();
     String telefono = txtTelefono.getText();
     String email = txtEmail.getText();
@@ -214,13 +229,13 @@ public void setDatos(String nombre, String apellidos, String telefono, String em
     }
 
     // Crear la ventana que muestra la tabla
-    PanelListaContactos listaVentana = new PanelListaContactos();
+    TablaContactos contactos = new TablaContactos();
 
     // Agregar el nuevo contacto
-    listaVentana.agregarContacto(nombre, apellidos, telefono, email, direccion);
+    contactos.agregarContacto(nombre, apellidos, telefono, email, direccion);
 
     // Mostrar la ventana
-    listaVentana.setVisible(true);
+    contactos.setVisible(true);
 
     // Limpiar campos
     txtNombre.setText("");
@@ -276,9 +291,9 @@ public void setDatos(String nombre, String apellidos, String telefono, String em
         this.dispose();
     }//GEN-LAST:event_btnVolverActionPerformed
 
-    private void txttelefonoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txttelefonoActionPerformed
+    private void txtTelefonoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTelefonoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txttelefonoActionPerformed
+    }//GEN-LAST:event_txtTelefonoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -320,16 +335,16 @@ public void setDatos(String nombre, String apellidos, String telefono, String em
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnValidarDatos;
     private javax.swing.JButton btnVolver;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField txtapellidos;
-    private javax.swing.JTextField txtdireccion;
-    private javax.swing.JTextField txtemail;
-    private javax.swing.JTextField txtnombre;
-    private javax.swing.JTextField txttelefono;
+    private javax.swing.JLabel lblApellidos;
+    private javax.swing.JLabel lblDireccion;
+    private javax.swing.JLabel lblEmail;
+    private javax.swing.JLabel lblNombre;
+    private javax.swing.JLabel lblTelefono;
+    private javax.swing.JTextField txtApellidos;
+    private javax.swing.JTextField txtDireccion;
+    private javax.swing.JTextField txtEmail;
+    private javax.swing.JTextField txtNombre;
+    private javax.swing.JTextField txtTelefono;
     // End of variables declaration//GEN-END:variables
 }
