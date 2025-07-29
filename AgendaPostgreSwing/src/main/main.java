@@ -5,6 +5,7 @@
 package main;
 import javax.swing.SwingUtilities;
 import ui.FrmPrincipal;
+import ui.MiAgenda;
 
 /**
  *
@@ -13,6 +14,8 @@ import ui.FrmPrincipal;
 public class main {
     public static void main(String[] args) {
          // Iniciar la interfaz gráfica principal
-         SwingUtilities.invokeLater(() -> new FrmPrincipal());
+         MiAgenda agenda = new MiAgenda();
+         agenda.setVisible(true);
+         
     } 
 }

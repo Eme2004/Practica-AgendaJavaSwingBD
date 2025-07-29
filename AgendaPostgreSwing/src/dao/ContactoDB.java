@@ -21,7 +21,7 @@ public class ContactoDB {
         String sql = "INSERT INTO contacto (nombres, apellidos, telefono, email, direccion, etiquetas) VALUES (?, ?, ?, ?, ?, ?)";
 
         // Uso de try-with-resources: se asegura de cerrar automáticamente la conexión y el PreparedStatement
-        try (Connection conn = ConexionBD.conectar();
+        try (Connection conn = ConexionBD.getConexion();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             // Asignación de valores del objeto Contacto a los parámetros de la consulta
@@ -47,7 +47,7 @@ public class ContactoDB {
         String sql = "SELECT * FROM contacto";
 
         // try-with-resources para conexión, Statement y ResultSet
-        try (Connection conn = ConexionBD.conectar();
+        try (Connection conn = ConexionBD.getConexion();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
 
@@ -77,7 +77,7 @@ public class ContactoDB {
         String sql = "INSERT INTO log_error (error, metodo) VALUES (?, ?)";
 
         // try-with-resources para registrar el error en la base
-        try (Connection conn = ConexionBD.conectar();
+        try (Connection conn = ConexionBD.getConexion();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, error);   // Mensaje de error
